@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 30px;
+    }
+    .container {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    textarea {
+      height: 200px;
+      resize: none;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .box {
+      width: 300px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Number Enrollment Checker</h2>
+  <div class="container">
+    <!-- List Input -->
+    <div class="box">
+      <label><strong>Enrolled Numbers</strong> (comma or line separated):</label>
+      <textarea id="numberList" placeholder="Enter numbers..."></textarea>
+    </div>
+
+    <!-- Single Number Input -->
+    <div class="box">
+      <label><strong>Check Number</strong>:</label>
+      <input type="text" id="checkNumber" placeholder="Enter number to check...">
+      <button onclick="checkNumber()">Check</button>
+      <div class="result" id="resultText"></div>
+    </div>
+  </div>
+
+  <script>
+    function checkNumber() {
+      const listInput = document.getElementById("numberList").value;
+      const checkNum = document.getElementById("checkNumber").value.trim();
+      const resultText = document.getElementById("resultText");
+
+      // Normalize input list: split by commas or newlines, trim, filter empty
+      const numberArray = listInput.split(/[\n,]+/)
+                                   .map(n => n.trim())
+                                   .filter(n => n !== "");
+
+      if (checkNum === "") {
+        resultText.textContent = "Please enter a number to check.";
+        resultText.style.color = "orange";
+        return;
+      }
+
+      if (numberArray.includes(checkNum)) {
+        resultText.textContent = "Enrolled";
+        resultText.style.color = "green";
+      } else {
+        resultText.textContent = "OK to call";
+        resultText.style.color = "blue";
+      }
+    }
+  </script>
+
+</body>
+</html>
