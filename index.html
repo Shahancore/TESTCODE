@@ -48,6 +48,7 @@
     <div class="box">
       <label><strong>Enrolled Numbers</strong> (comma or line separated):</label>
       <textarea id="numberList" placeholder="Enter numbers..."></textarea>
+      <button onclick="saveList()">Save List</button>
     </div>
 
     <!-- Single Number Input -->
@@ -60,12 +61,27 @@
   </div>
 
   <script>
+    // Load saved list on page load
+    window.onload = function () {
+      const savedList = localStorage.getItem("numberList");
+      if (savedList) {
+        document.getElementById("numberList").value = savedList;
+      }
+    };
+
+    // Save the list to localStorage
+    function saveList() {
+      const listInput = document.getElementById("numberList").value;
+      localStorage.setItem("numberList", listInput);
+      alert("List saved! It will stay even if you refresh.");
+    }
+
+    // Check if a number is enrolled or OK to call
     function checkNumber() {
       const listInput = document.getElementById("numberList").value;
       const checkNum = document.getElementById("checkNumber").value.trim();
       const resultText = document.getElementById("resultText");
 
-      // Normalize input list: split by commas or newlines, trim, filter empty
       const numberArray = listInput.split(/[\n,]+/)
                                    .map(n => n.trim())
                                    .filter(n => n !== "");
